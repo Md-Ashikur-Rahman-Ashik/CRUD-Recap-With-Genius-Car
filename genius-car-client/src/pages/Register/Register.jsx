@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import login from "../../assets/images/login/login.svg";
+import register from "../../assets/images/login/login.svg";
 
-const Login = () => {
-  const handleLogin = (event) => {
+const Register = () => {
+  const handleRegister = (event) => {
     event.preventDefault();
   };
 
@@ -10,11 +10,23 @@ const Login = () => {
     <div className="hero min-h-screen bg-base-200">
       <div className="hero-content gap-12 flex-col lg:flex-row">
         <div className="w-1/2">
-          <img src={login} alt="" />
+          <img src={register} alt="" />
         </div>
         <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-          <form className="card-body" onSubmit={handleLogin}>
-            <h1 className="text-3xl text-center font-bold">Login</h1>
+          <form className="card-body" onSubmit={handleRegister}>
+            <h1 className="text-3xl text-center font-bold">Register</h1>
+            <div className="form-control">
+              <label className="label">
+                <span className="label-text">Name</span>
+              </label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                className="input input-bordered"
+                required
+              />
+            </div>
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -29,7 +41,7 @@ const Login = () => {
             </div>
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Confirm Password</span>
               </label>
               <input
                 type="password"
@@ -38,24 +50,19 @@ const Login = () => {
                 className="input input-bordered"
                 required
               />
-              <label className="label">
-                <a href="#" className="label-text-alt link link-hover">
-                  Forgot password?
-                </a>
-              </label>
             </div>
             <div className="form-control mt-6">
               <input
                 type="submit"
-                value={"Login"}
+                value={"Register"}
                 className="btn btn-primary"
               />
             </div>
             <p className="my-4 text-center">
-              New to Car Doctor? Please
-              <Link className="text-orange-600 font-bold" to="/register">
-                Register
-              </Link>
+              Already have an account? Please 
+                <Link className="text-orange-600 font-bold" to="/login">
+                  Login
+                </Link>
             </p>
           </form>
         </div>
@@ -64,4 +71,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
