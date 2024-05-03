@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const jwt = require("jsonwebtoken");
 const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require("dotenv").config();
@@ -14,6 +15,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use(cookieParser());
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tx9lkv1.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
@@ -72,6 +74,7 @@ async function run() {
 
     app.get("/bookings", async (req, res) => {
       // console.log(req.query);
+      // console.log("Token in here", req.cookies.token);
       let query = {};
       if (req.query?.email) {
         query = { email: req.query.email };

@@ -22,13 +22,15 @@ const Login = () => {
         const loggedInUser = result.user;
         const user = { email };
         // console.log(user);
-        // navigate(location?.state ? location.state : "/");
 
         // Get Access token
         axios
           .post("http://localhost:5000/jwt", user, { withCredentials: true })
           .then((res) => {
             console.log(res.data);
+            if (res.data.success) {
+              navigate(location?.state ? location.state : "/");
+            }
           });
       })
       .catch((error) => console.error(error));
