@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import login from "../../assets/images/login/login.svg";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
   const { signInUser } = useContext(AuthContext);
@@ -18,9 +19,15 @@ const Login = () => {
 
     signInUser(email, password)
       .then((result) => {
-        const user = result.user;
+        const loggedInUser = result.user;
+        const user = { email };
         // console.log(user);
-        navigate(location?.state ? location.state : "/");
+        // navigate(location?.state ? location.state : "/");
+
+        // Get Access token
+        axios.post("http://localhost:5000/jwt", user).then((res) => {
+          console.log(res.data);
+        });
       })
       .catch((error) => console.error(error));
   };
