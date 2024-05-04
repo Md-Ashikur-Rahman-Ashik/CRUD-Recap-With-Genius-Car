@@ -36,15 +36,12 @@ const logger = async (req, res, next) => {
 const verifyToken = async (req, res, next) => {
   const token = req?.cookies?.token;
   if (!token) {
-    return res.status(401).send({ message: "Not Authorized" });
+    return res.status(401).send({ message: "Unauthorized" });
   }
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    // Error
     if (err) {
-      return res.status(401).send({ message: "Unauthorized" });
+      return res.status(401).send({ message: "Unauthorized Access" });
     }
-    // If token is valid, it would be decoded
-    // console.log("Value in the token", decoded);
     req.user = decoded;
     next();
   });
@@ -97,8 +94,14 @@ async function run() {
     // Bookings
 
     app.get("/bookings", logger, verifyToken, async (req, res) => {
-      // console.log(req.query);
+      // console.log(req.query.email);
+      // console.log(req.user.email);
       // console.log("Token is here", req.cookies);
+
+      if (req.query.email !== req.user.email) {
+        return res.status(403).send({ message: "Forbidden Access" });
+      }
+
       let query = {};
       if (req.query?.email) {
         query = { email: req.query.email };

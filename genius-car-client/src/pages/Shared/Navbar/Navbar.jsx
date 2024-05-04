@@ -8,8 +8,8 @@ const Navbar = () => {
 
   const handleLogOut = () => {
     logOut()
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        alert("User logged out successful");
       })
       .catch((error) => console.error(error));
   };
