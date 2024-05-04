@@ -27,6 +27,29 @@ const client = new MongoClient(uri, {
   },
 });
 
+// Middlewares
+const logger = async (req, res, next) => {
+  // console.log("called", req.host, req.originalUrl);
+  next();
+};
+
+const verifyToken = async (req, res, next) => {
+  const token = req?.cookies?.token;
+  if (!token) {
+    return res.status(401).send({ message: "Not Authorized" });
+  }
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+    // Error
+    if (err) {
+      return res.status(401).send({ message: "Unauthorized" });
+    }
+    // If token is valid, it would be decoded
+    // console.log("Value in the token", decoded);
+    req.user = decoded;
+    next();
+  });
+};
+
 async function run() {
   try {
     // Connect the client to the server	(optional starting in v4.7)
@@ -37,7 +60,7 @@ async function run() {
     const bookingCollection = client.db("carDoctor").collection("bookings");
 
     // Auth Related API
-    app.post("/jwt", async (req, res) => {
+    app.post("/jwt", logger, async (req, res) => {
       const user = req.body;
       // console.log(user);
 
@@ -54,7 +77,7 @@ async function run() {
     });
 
     // Services related API
-    app.get("/services", async (req, res) => {
+    app.get("/services", logger, async (req, res) => {
       const cursor = serviceCollection.find();
       const result = await cursor.toArray();
       res.send(result);
@@ -73,7 +96,7 @@ async function run() {
 
     // Bookings
 
-    app.get("/bookings", async (req, res) => {
+    app.get("/bookings", logger, verifyToken, async (req, res) => {
       // console.log(req.query);
       // console.log("Token is here", req.cookies);
       let query = {};
