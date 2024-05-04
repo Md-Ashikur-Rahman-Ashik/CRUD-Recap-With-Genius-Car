@@ -25,7 +25,9 @@ const Login = () => {
 
         // Get Access token
         axios
-          .post("http://localhost:5000/jwt", user, { withCredentials: true })
+          .post("http://localhost:5000/jwt", user, {
+            withCredentials: true,
+          })
           .then((res) => {
             console.log(res.data);
             if (res.data.success) {

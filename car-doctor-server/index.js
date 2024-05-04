@@ -11,7 +11,6 @@ app.use(
   cors({
     origin: ["http://localhost:5173"],
     credentials: true,
-    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
   })
 );
 app.use(express.json());
@@ -41,9 +40,11 @@ async function run() {
     app.post("/jwt", async (req, res) => {
       const user = req.body;
       // console.log(user);
+
       const token = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {
-        expiresIn: "5h",
+        expiresIn: "10h",
       });
+
       res
         .cookie("token", token, {
           httpOnly: true,
@@ -74,7 +75,7 @@ async function run() {
 
     app.get("/bookings", async (req, res) => {
       // console.log(req.query);
-      // console.log("Token in here", req.cookies.token);
+      // console.log("Token is here", req.cookies);
       let query = {};
       if (req.query?.email) {
         query = { email: req.query.email };
