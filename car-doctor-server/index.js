@@ -33,18 +33,9 @@ const logger = async (req, res, next) => {
   next();
 };
 
-const verifyToken = async (req, res, next) => {
+const verifyToken = (req, res, next) => {
   const token = req?.cookies?.token;
-  if (!token) {
-    return res.status(401).send({ message: "Unauthorized" });
-  }
-  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ message: "Unauthorized Access" });
-    }
-    req.user = decoded;
-    next();
-  });
+  next()
 };
 
 async function run() {
