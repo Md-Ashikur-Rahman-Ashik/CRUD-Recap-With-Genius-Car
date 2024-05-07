@@ -25,9 +25,9 @@ const BookService = () => {
       img,
     };
 
-    console.log("Customer's order is:", order);
+    // console.log("Customer's order is:", order);
 
-    fetch("http://localhost:5000/bookings", {
+    fetch("https://car-doctor-server-topaz-sigma.vercel.app/bookings", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -36,7 +36,7 @@ const BookService = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.insertedId) {
           alert("Service booked successfully");
         }

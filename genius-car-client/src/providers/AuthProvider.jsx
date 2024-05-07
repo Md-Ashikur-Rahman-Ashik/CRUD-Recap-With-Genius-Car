@@ -40,19 +40,19 @@ const AuthProvider = ({ children }) => {
       // If user exists then issue a token
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", loggedUser, {
+          .post("https://car-doctor-server-topaz-sigma.vercel.app/jwt", loggedUser, {
             withCredentials: true,
           })
-          .then((res) => {
-            console.log(res.data);
+          .then(() => {
+            // console.log(res.data);
           });
       } else {
         axios
-          .post("http://localhost:5000/logout", loggedUser, {
+          .post("https://car-doctor-server-topaz-sigma.vercel.app/logout", loggedUser, {
             withCredentials: true,
           })
-          .then((res) => {
-            console.log(res.data);
+          .then(() => {
+            // console.log(res.data);
           });
       }
     });

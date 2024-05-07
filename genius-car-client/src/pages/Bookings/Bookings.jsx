@@ -29,7 +29,7 @@ const Bookings = () => {
     const proceed = confirm("Are you sure to delete?");
 
     if (proceed) {
-      fetch(`http://localhost:5000/bookings/${id}`, {
+      fetch(`https://car-doctor-server-topaz-sigma.vercel.app/bookings/${id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -48,7 +48,7 @@ const Bookings = () => {
   }
 
   const handleConfirm = (id) => {
-    fetch(`http://localhost:5000/bookings/${id}`, {
+    fetch(`https://car-doctor-server-topaz-sigma.vercel.app/bookings/${id}`, {
       method: "PATCH",
       headers: {
         "content-type": "application/json",
@@ -57,7 +57,7 @@ const Bookings = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         if (data.modifiedCount > 0) {
           // Update State
           const updated = bookings.find((booking) => booking._id === id);
